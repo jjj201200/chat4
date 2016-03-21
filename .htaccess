@@ -1,0 +1,10 @@
+RewriteEngine On
+
+#RewriteBase /chat4
+
+RewriteCond $1 !^(index\.php|images|robots\.txt|^.*\.jpg|^.*\.jpeg|^.*\.bmp|^.*\.gif|^.*\.svg|^.*\.png|^.*\.js|^.*\.css|^.*\.woff|^.*\.ttf|^.*\.svg|^.*\.mp3|^.*\.wma|^.*\.wav|^.*\.mod|^.*\.ogg|^.*\.m4a)
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+RewriteRule ^(.*)$ index.php/$1 [L,NC]
