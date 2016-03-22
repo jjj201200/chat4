@@ -32,8 +32,8 @@ audio {
 }
 
 .globalWidth {
-    width : 1000px;
-    margin: 0 auto;
+    width  : 1000px;
+    margin : 0 auto;
 }
 
 .contentWidth {
@@ -95,7 +95,7 @@ audio {
     transition       : all 0.3s;
     border-bottom    : 1px solid rgba(0, 0, 0, 0.3);
     text-indent      : 20px;
-    /*overflow         : hidden;*/
+    overflow         : hidden;
 }
 
 .sidemenu dl dd:hover, #insect #filelistwindow dl:hover {
@@ -124,7 +124,8 @@ audio {
     font-weight      : bold;
     cursor           : pointer;
 }
-.sidemenu dd label .tip{
+
+.sidemenu dd label .tip {
     /*position: absolute;*/
     /*width: 100px;*/
     /*height: 25px;*/
@@ -132,18 +133,23 @@ audio {
     /*right: 100%;*/
     /*top: -25px;*/
 }
-.sidemenu dd label[for=username] .tip{
+
+.sidemenu dd label[for=username] .tip {
 
 }
-.sidemenu dd label[for=password] .tip{
+
+.sidemenu dd label[for=password] .tip {
 
 }
-.sidemenu dd label[for=password_confirm] .tip{
+
+.sidemenu dd label[for=password_confirm] .tip {
 
 }
-.sidemenu dd label[for=code] .tip{
+
+.sidemenu dd label[for=code] .tip {
 
 }
+
 #menu {
     width            : 100%;
     height           : 47px;
@@ -203,10 +209,10 @@ audio {
     cursor      : pointer;
 }
 
-
 #menu dt:hover {
     color : #FFFFFF;
 }
+
 #menu dl:first-child dt {
     padding : 0px 10px 0px 0px;
 }
@@ -396,18 +402,18 @@ audio {
 }
 
 #title {
-    width            : inherit;
-    min-height       : 15px;
-    padding          : 5px 25px 5px 150px;
-    border-top       : 2px solid #111111;
-    border-bottom    : 1px solid #111111;
-    margin-bottom    : 5px;
-    font-size        : 12px;
-    font-weight      : normal;
-    box-sizing       : border-box;
-    overflow         : hidden;
-    top              : 0px;
-    z-index          : 1;
+    width         : inherit;
+    min-height    : 15px;
+    padding       : 5px 25px 5px 150px;
+    border-top    : 2px solid #111111;
+    border-bottom : 1px solid #111111;
+    margin-bottom : 5px;
+    font-size     : 12px;
+    font-weight   : normal;
+    box-sizing    : border-box;
+    overflow      : hidden;
+    top           : 0px;
+    z-index       : 1;
     /*background-image : url("../pw_pattern.png");*/
 }
 
@@ -435,7 +441,7 @@ audio {
     width           : 15px;
     text-align      : center;
     cursor          : pointer;
-    transition: all .3s;
+    transition      : all .3s;
 }
 
 #title a.music::after {
@@ -444,12 +450,13 @@ audio {
     left     : 2px;
     top      : -2px;
 }
+
 #title a.img::after {
-    content  : "i";
-    position : absolute;
-    vertical-align:super;
-    left     : 2px;
-    top      : -2px;
+    content        : "i";
+    position       : absolute;
+    vertical-align : super;
+    left           : 2px;
+    top            : -2px;
 }
 
 #title a:hover {
@@ -464,6 +471,14 @@ blockquote {
     background-color : #FFFFFF;
     margin-bottom    : 15px;
     box-shadow       : 0 1px 1px rgba(0, 0, 0, 0.2);
+    transition       : all .3s;
+    overflow         : hidden;
+    height           : auto;
+}
+
+blockquote.delete {
+    transition : all .3s;
+    padding    : 0 10px 0 10px;
 }
 
 blockquote > span.number {
@@ -498,6 +513,16 @@ blockquote img {
 
 blockquote:last-child img {
     margin-bottom : 10px;
+}
+
+blockquote .delete {
+    color          : #CCCCCC;
+    cursor         : pointer;
+    text-transform : lowercase;
+}
+
+blockquote .delete:hover {
+    color : #C40404;
 }
 
 p {
@@ -552,7 +577,7 @@ p {
 
 #upload_files {
     background-color : #920303;
-    cursor: pointer;
+    cursor           : pointer;
 }
 
 #upload_files input {
@@ -565,13 +590,14 @@ p {
     width            : 100%;
     box-sizing       : border-box;
     background-color : #111111;
-    cursor: pointer;
+    cursor           : pointer;
     /*text-align       : left;*/
 }
 
 /*sign up*/
 #code {
     width : 160px;
+    text-transform: uppercase;
 }
 
 .code {

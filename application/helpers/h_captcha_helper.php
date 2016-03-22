@@ -95,7 +95,7 @@ if (!function_exists('create_captcha')) {
         // -----------------------------------
         $word = '';
         if ($word == '') {
-            $pool = '23456789abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ';
+            $pool = '23456789ABCDEFGHIJKLMNPQRSTUVWXYZ';
 
             $str = '';
             for ($i = 0; $i < 5; $i++) {
@@ -151,18 +151,18 @@ if (!function_exists('create_captcha')) {
         $circles = 20;
         $points = 32;
 
-        for ($i = 0; $i < ($circles * $points) - 1; $i++) {
-            $theta = $theta + $thetac;
-            $rad = $radius * ($i / $points);
-            $x = ($rad * cos($theta)) + $x_axis;
-            $y = ($rad * sin($theta)) + $y_axis;
-            $theta = $theta + $thetac;
-            $rad1 = $radius * (($i + 1) / $points);
-            $x1 = ($rad1 * cos($theta)) + $x_axis;
-            $y1 = ($rad1 * sin($theta)) + $y_axis;
-            imageline($im, $x, $y, $x1, $y1, $grid_color);
-            $theta = $theta - $thetac;
-        }
+//        for ($i = 0; $i < ($circles * $points) - 1; $i++) {
+//            $theta = $theta + $thetac;
+//            $rad = $radius * ($i / $points);
+//            $x = ($rad * cos($theta)) + $x_axis;
+//            $y = ($rad * sin($theta)) + $y_axis;
+//            $theta = $theta + $thetac;
+//            $rad1 = $radius * (($i + 1) / $points);
+//            $x1 = ($rad1 * cos($theta)) + $x_axis;
+//            $y1 = ($rad1 * sin($theta)) + $y_axis;
+//            imageline($im, $x, $y, $x1, $y1, $grid_color);
+//            $theta = $theta - $thetac;
+//        }
 
         // -----------------------------------
         //  Write the text
@@ -172,7 +172,7 @@ if (!function_exists('create_captcha')) {
 
         if ($use_font == FALSE) {
             $font_size = 5;
-            $x = rand(0, $img_width / ($length));
+            $x = rand(5, $img_width / ($length)-5);
             $y = 0;
         } else {
             $font_size = 16;
@@ -183,7 +183,7 @@ if (!function_exists('create_captcha')) {
         for ($i = 0; $i < strlen($word); $i++) {
             $text_color = imagecolorallocate($im, rand(20, 150), rand(20, 100), rand(20, 100));
             if ($use_font == FALSE) {
-                $y = rand(0, $img_height / 2);
+                $y = rand(5, $img_height / 10);
                 imagestring($im, $font_size, $x, $y, substr($word, $i, 1), $text_color);
                 $x += ($font_size * 2);
             } else {

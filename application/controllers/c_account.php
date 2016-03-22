@@ -15,13 +15,13 @@ class C_Account extends CI_Controller
         //			$this->load->model (array ('jm_captcha', 'jm_messager', 'jm_account','jm_system'));
         $this->load->model(['m_account', 'm_captcha']);
         /*定义验证错误时返回的消息格式*/
-        //			$this->form_validation->set_message ('required', '%s' . $this->lang->line ('not_set'));
-        //			$this->form_validation->set_message ('min_length', '%s' . $this->lang->line ('unformed_min_length_6'));
-        //			$this->form_validation->set_message ('max_length', '%s' . $this->lang->line ('unformed_max_length_6'));
-        //			$this->form_validation->set_message ('exact_length', '%s' . $this->lang->line ('unformed_length_5'));
-        //			$this->form_validation->set_message ('alpha_dash', '%s' . $this->lang->line ('illegal_char_alpha_dash'));
-        //			$this->form_validation->set_message ('valid_email', '%s' . $this->lang->line ('invalid_email'));
-        //			$this->form_validation->set_message ('xss_clean', '%s' . $this->lang->line ('xss_clean'));
+        $this->form_validation->set_message ('required', '%s' . $this->lang->line ('not_set'));
+        $this->form_validation->set_message ('min_length', '%s' . $this->lang->line ('unformed_min_length_6'));
+        $this->form_validation->set_message ('max_length', '%s' . $this->lang->line ('unformed_max_length_6'));
+        $this->form_validation->set_message ('exact_length', '%s' . $this->lang->line ('unformed_length_5'));
+        $this->form_validation->set_message ('alpha_dash', '%s' . $this->lang->line ('illegal_char_alpha_dash'));
+        $this->form_validation->set_message ('valid_email', '%s' . $this->lang->line ('invalid_email'));
+        $this->form_validation->set_message ('xss_clean', '%s' . $this->lang->line ('xss_clean'));
     }
 
     /**
@@ -137,6 +137,7 @@ class C_Account extends CI_Controller
     public function sign_up()
     {
         if ($this->form_validation->run('sign_up') == FALSE) {
+            $this->session->set_flashdata ('form_error', validation_errors ());
         } else {
             $_username = $this->input->post('username'); /*用户名*/
             $_password = $this->input->post('password'); /*密码*/
@@ -155,6 +156,8 @@ class C_Account extends CI_Controller
     {
 
         $this->session->unset_userdata('log_in');
+        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('uid');
         redirect(base_url(), 'refresh');
     }
 

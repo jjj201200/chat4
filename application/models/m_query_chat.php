@@ -22,14 +22,16 @@ class M_Query_chat extends CI_Model {
             $this->db->where('date', $year . "-" . $month . "-" . $day);
             $this->db->join('user', 'chat.publisher = user.uid');
             $result = $this->db->get()->result();
+            $username = $this->session->userdata('username');
             $array = [];
             foreach ($result as $key => $value) {
                 $value->tucao = stripslashes($value->tucao);
                 $value->imgJson = explode('-', $value->imgJson);
                 $value->soundJson = explode('-', $value->soundJson);
                 array_push($array, $value);
+                if($username&&$value->username==$username) $value->delete = true;else $value->delete = false;
             }
-            echo json_encode($array);
+            return $array;
         } else echo 1;
     }
 
@@ -48,7 +50,10 @@ class M_Query_chat extends CI_Model {
 
         return $year_array;
     }
-
+    public function del_chat($chat_id){
+        $this->db->where('cid', $chat_id);
+        echo $this->db->delete('chat');
+    }
 }
 
 

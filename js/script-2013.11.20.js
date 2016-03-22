@@ -26,8 +26,63 @@ $(document).ready(function () {
         'sign_up': false,
         'sign_in': false
     };
-    /*
+    /*PNotify
      */
+    var animate_in = $('#animate_in').val(),
+        animate_out = $('#animate_out').val();
+    PNotify.prototype.options.delay ? (function () {
+        PNotify.prototype.options.delay = 2000;
+    }()) : (alert('Timer is already at zero.'))
+    var show = function (type) {
+        var opts = {
+            title: "Over Here",
+            text: "Check me out. I'm in a different stack.",
+            //addclass: "stack-bar-top",
+            //width: "50%"
+        };
+        switch (type) {
+            case 'del_error':
+                opts.title = "Oh No!Delete fail!";
+                opts.text = "Something terrible happened.";
+                opts.type = "error";
+                break;
+            case 'info':
+                opts.title = "Breaking News";
+                opts.text = "Have you met Ted?";
+                opts.type = "info";
+                break;
+            case 'del_success':
+                opts.title = "Success!";
+                opts.text = "Delete Success!.";
+                opts.type = "success";
+                break;
+            case 'del_confirm':
+                opts.title = "Need Delete It?";
+                opts.text = "";
+                opts.icon = 'glyphicon glyphicon-question-sign';
+                opts.confirm = {confirm: true};
+                opts.buttons = {
+                    closer: false,
+                    sticker: false
+                };
+                opts.hide = false;
+                opts.addclass = "stack-modal";
+                opts.stack = {
+                    dir1: "down",
+                    dir2: "right",
+                    push: "top",
+                    spacing1: 0,
+                    spacing2: 0,
+                    //modal: true,
+                    overlay_close: true
+                }
+                opts.history = {history: false};
+                break;
+        }
+        return new PNotify(opts);
+    }
+
+
     var openSideMenu = function (type) {
         $main.addClass(mainDarkenClass);
         $.each(sideMenu, function (i, n) {
@@ -106,7 +161,6 @@ $(document).ready(function () {
             data: "sign_out=true",
             success: function (data) {
                 if (data == 0) location.reload();
-                console.log(data);
             }
         });
     });
@@ -125,6 +179,33 @@ $(document).ready(function () {
     });
     $('#close_insect').click(function () {
         closeSideMenu();
+    });
+    var code_confirm = false;
+    $('*[name=code]').keyup(function (e) {
+        var long = $(this).val().length;
+        var val = $(this).val();
+        var t = $(this).parents('dd');
+        if (long == 5) {
+            $.ajax({
+                type: 'post',
+                url: 'check_code',
+                data: 'check_code=' + val,
+                success: function (data) {
+
+                    if (data == '1') {
+                        t.animate({
+                            'padding': '0 10px 0 10px',
+                            'height': 0,
+                            'border-bottom':'none'
+                        })
+                        code_confirm=true;
+                    }
+                }
+            })
+        }
+    })
+    $('*[name=sign_in]').click(function(){
+        if(code_confirm==true) $('*[action=sign_in]').submit();
     });
     //Category
     //$('#category_btn').click(function () {
@@ -195,7 +276,7 @@ $(document).ready(function () {
         }
         $('#insect').find('form').submit();
     });
-
+    var ajax;
     $(document).on('click', '#menu dl dt', function () {
         $(this).parent().siblings("dl").children("dd").removeClass('menuShow').addClass('menuHide');
         $(this).parent().parent().siblings(".year").find("dd").removeClass('menuShow').addClass('menuHide');
@@ -207,7 +288,46 @@ $(document).ready(function () {
         $(this).parent().siblings('.year').find('dl').removeClass('menuShow').addClass('menuHide');
         $(this).siblings('dl').removeClass('menuHide').addClass('menuShow');
     });
-    var ajax;
+    $(document).on('click', 'blockquote .delete', function () {
+        if (ajax != null)ajax.abort();
+        var chatId = $(this).parents('blockquote').attr('id').substr(1);
+        var t = $(this);
+        show('del_confirm').get().on('pnotify.confirm', function () {
+            ajax = $.ajax({
+                type: "post",
+                url: "del_chat",
+                data: "chat_id=" + chatId,
+                success: function (data) {
+                    console.log(data);
+                    t.parents('blockquote').animate({
+                        'height': 0,
+                        'padding-top': 0,
+                        'padding-bottom': 0,
+                        'margin-bottom': 0,
+                        'opacity': 0
+                    });
+                    new PNotify({
+                        title: 'Delete Success',
+                        text: 'That thing that you were trying to do worked!',
+                        type: 'success'
+                    });
+                },
+                error: function (data) {
+                    console.log(data);
+                    new PNotify({
+                        title: 'Oh No!Delete fail!',
+                        text: 'Something terrible happened.',
+                        type: 'error'
+                    });
+                }
+
+            });
+        }).on('pnotify.cancel', function () {
+        });
+
+
+    });
+
     $(document).on('click', '#menu dd', function () {
         if (ajax != null)ajax.abort();
         $this = $(this);
@@ -222,8 +342,9 @@ $(document).ready(function () {
             url: "query_chat",
             data: "year=" + $this.parent('dl').parent('.year').attr('alt') + "&month=" + $this.siblings('dt').attr('alt') + "&day=" + $this.attr('alt'),
             success: function (json) {
-                var j = eval("(" + json + ")");
-                console.log(j);
+                var k = eval("(" + json + ")");
+                console.log(k);
+                var j = k['chat'];
                 $('#content').find('div').empty().append("<h2 id='title'><span>" + $this.parent('dl').parent('.year').attr('alt') + "." + $this.siblings('dt').attr('alt') + "." + $this.attr('alt') + " - " + json.length + "</span></h2>");
                 $.each(j, function (i, n) {
 
@@ -231,10 +352,12 @@ $(document).ready(function () {
 
                     $blockquote = $('<blockquote id="b' + n['cid'] + '"></blockquote>');
                     $timestamp = $('<span class="number">NO.' + ( i + 1 ) + ' - ' + ( n['tucao'] === "" ? 0 : n['tucao'].length ) + ' - ' + ( n['imgJson'][0] === "" ? 0 : n['imgJson'].length ) + '</span><span class="time">' + n['date'] + '</span>');
-                    $username = $('<span class="username">-- ' + n['username'] + '</span>');
+                    $delete = (n['delete'] == true) ? $delete = $('<a class="delete">DELETE</a>') : '';
+                    $username = $('<span class="username"></span>').append($delete, ' -- ' + n['username']);
                     $blockquote.append($timestamp, $username);
                     $imgBox = $('<div class="imgBox"></div>');
                     $soundBox = $('<div class="soundBox"></div>');
+
                     $img_str = "";
                     $sound_str = "";
                     $.each(n['imgJson'], function (j, m) {
@@ -259,6 +382,8 @@ $(document).ready(function () {
                     $('#content > div').append($blockquote);
                     scrollToTop();
                     $main.removeClass(mainLoadingClass);
+
+
                 });
             }
         });

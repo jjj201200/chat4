@@ -39,8 +39,10 @@
 |
 */
 
+$route['del_chat'] = "page/del_chat";
 $route['query_chat'] = "page/query_chat";
 $route['code'] = "page/get_captcha";
+$route['check_code'] = "page/check_code";
 $route['upload'] = "c_upload/upload";
 $route['sign_out'] = "c_account/sign_out";
 $route['sign_in'] = "c_account/sign_in";

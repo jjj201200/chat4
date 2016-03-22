@@ -8,6 +8,7 @@
     <title>Puredark History </title>
     <link type="text/css" rel="stylesheet" href="css/index-2013.11.20.css"/>
     <link type="text/css" rel="stylesheet" href="css/jquery.mCustomScrollbar.css"/>
+    <link type="text/css" rel="stylesheet" href="css/pnotify.custom.min.css"/>
     <link type="text/css" rel="stylesheet" href="font/quicksand/stylesheet.css"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
@@ -15,6 +16,7 @@
     <script type="text/javascript" src="js/jquery.form.min.js"></script>
     <script type="text/javascript" src="js/jquery.animate-colors.js"></script>
     <script type="text/javascript" src="js/plupload.full.min.js"></script>
+    <script type="text/javascript" src="js/pnotify.custom.min.js"></script>
     <script type="text/javascript" src="js/script-2013.11.20.js"></script>
     <!--    <script type="text/javascript" src="js/prefixfree.min.js"></script>-->
     <script type="text/javascript">
@@ -107,7 +109,7 @@
             <dd>
                 <label for="username">
                     Username
-                    <input type="text" id="username" name="username" required="required"/>
+                    <input type="text" id="username" name="username" placeholder="at least 3 characters" required="required"/>
                     <div class="tip"></div>
                 </label>
             </dd>
@@ -146,7 +148,7 @@
             <dd>
                 <label for="username">
                     Username
-                    <input type="text" id="username" name="username" required="required"/>
+                    <input type="text" id="username" name="username" placeholder="at least 3 characters" required="required"/>
                 </label>
 
             </dd>
