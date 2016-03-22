@@ -465,7 +465,7 @@ audio {
 }
 
 blockquote {
-    padding          : 28px 10px 30px 10px;;
+    padding          : 30px 10px 10px 10px;
     overflow         : hidden;
     width            : 879px;
     background-color : #FFFFFF;
@@ -477,31 +477,40 @@ blockquote {
 }
 
 blockquote.delete {
-    transition : all .3s;
+    transition : all .8s;
     padding    : 0 10px 0 10px;
 }
 
-blockquote > span.number {
+blockquote .content .number {
+    transition: all .4s;
     display       : block;
-    margin-bottom : 10px;
+    /*margin-bottom : 10px;*/
     color         : #CCCCCC;
     text-align    : left;
     position      : absolute;
-    top           : 5px;
+    top: -25px;
+    cursor:default;
+}
+blockquote .content .number:hover,blockquote .content .time:hover,blockquote .delete:hover,blockquote .comment:hover{
+    color:#C40404;
 }
 
-blockquote > span.time {
+blockquote .content .time {
+    transition: all .4s;
     position : absolute;
-    top      : 5px;
-    right    : 10px;
+    top      : -25px;
+    right    : 0;
     color    : #CCCCCC;
+    cursor:default;
 }
 
-blockquote > span.username {
+blockquote .content .username {
     position : absolute;
-    bottom   : 5px;
-    right    : 10px;
+    bottom   : 0px;
+    right    : 0px;
     color    : #CCCCCC;
+    transition: all .3s;
+    cursor:default;
 }
 
 blockquote img {
@@ -515,20 +524,19 @@ blockquote:last-child img {
     margin-bottom : 10px;
 }
 
-blockquote .delete {
+blockquote .delete,blockquote .comment {
     color          : #CCCCCC;
     cursor         : pointer;
     text-transform : lowercase;
-}
-
-blockquote .delete:hover {
-    color : #C40404;
+    transition: all .4s;
 }
 
 p {
     padding     : 10px 25px 0px 5px;
     word-wrap   : break-word;
     font-family : "Oxygen", Arial, "Hiragino Sans GB", "Microsoft YaHei", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    font-size: 8px;
+    font-weight: 400;
 }
 
 #footer {

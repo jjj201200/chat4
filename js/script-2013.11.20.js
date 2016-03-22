@@ -249,7 +249,7 @@ $(document).ready(function () {
             location.reload();
             //$('#menu dl:last dd:last').click();
             //$('#input').show('slow');
-            console.log(xhr.responseText);
+            //console.log(xhr.responseText);
         }
     });
     $(document).on('change', '#file_upload', function () {
@@ -298,19 +298,24 @@ $(document).ready(function () {
                 url: "del_chat",
                 data: "chat_id=" + chatId,
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     t.parents('blockquote').animate({
                         'height': 0,
                         'padding-top': 0,
                         'padding-bottom': 0,
                         'margin-bottom': 0,
                         'opacity': 0
+                    },function(){
+                        new PNotify({
+                            title: 'Delete Success',
+                            text: 'That thing that you were trying to do worked!',
+                            type: 'success'
+                        });
+                        t.parents('blockquote').remove();
+                        if($('#content blockquote').length==0){location.reload();}
                     });
-                    new PNotify({
-                        title: 'Delete Success',
-                        text: 'That thing that you were trying to do worked!',
-                        type: 'success'
-                    });
+
+
                 },
                 error: function (data) {
                     console.log(data);
@@ -351,10 +356,15 @@ $(document).ready(function () {
                     $('#content').find('div h2').append('<a class="a' + n['cid'] + '" href="#b' + n['cid'] + '">' + ( i + 1 ) + '</a>');
 
                     $blockquote = $('<blockquote id="b' + n['cid'] + '"></blockquote>');
+                    $content = $('<div class="content"></div>');
                     $timestamp = $('<span class="number">NO.' + ( i + 1 ) + ' - ' + ( n['tucao'] === "" ? 0 : n['tucao'].length ) + ' - ' + ( n['imgJson'][0] === "" ? 0 : n['imgJson'].length ) + '</span><span class="time">' + n['date'] + '</span>');
-                    $delete = (n['delete'] == true) ? $delete = $('<a class="delete">DELETE</a>') : '';
-                    $username = $('<span class="username"></span>').append($delete, ' -- ' + n['username']);
-                    $blockquote.append($timestamp, $username);
+
+                    $delete = (n['delete'] == true) ? $('<a class="delete">delete</a>') : '';
+
+                    $comment = (k['login']==true)?$('<a class="comment">comment</a>'):'';
+
+                    $username = $('<span class="username"></span>').append($comment,'  ',$delete, ' -- ' + n['username']);
+
                     $imgBox = $('<div class="imgBox"></div>');
                     $soundBox = $('<div class="soundBox"></div>');
 
@@ -376,9 +386,16 @@ $(document).ready(function () {
                         $imgBox.append($img_str);
                     if ($sound_str != "")
                         $soundBox.append($sound_str);
-                    $blockquote.append($imgBox).append($soundBox);
+                    $content.append($imgBox).append($soundBox);
                     if (n['tucao'] != "")
-                        $blockquote.append('<p>' + n['tucao'] + '</p>');
+                        $content.append('<p>' + n['tucao'] + '</p>');
+
+                    //comment box
+                    $comment_box = $('<div class="comment_box hide"></div>')
+                    $content.append($timestamp, $username);
+                    $blockquote.append($content);
+                    $blockquote.append($comment_box);
+
                     $('#content > div').append($blockquote);
                     scrollToTop();
                     $main.removeClass(mainLoadingClass);

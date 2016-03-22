@@ -39,6 +39,7 @@
 |
 */
 
+$route['deploy'] = "page/deploy";
 $route['del_chat'] = "page/del_chat";
 $route['query_chat'] = "page/query_chat";
 $route['code'] = "page/get_captcha";

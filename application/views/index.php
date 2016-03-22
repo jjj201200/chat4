@@ -98,7 +98,7 @@
     </div>
     <div id="footer">
         <p class="globalWidth">
-            Designed by Ruo. Powered by Puredark - 2016.
+            Designed by Ruo. Powered by Ruo - 2016.
         </p>
     </div>
 </div>
